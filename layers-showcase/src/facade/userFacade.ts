@@ -1,5 +1,5 @@
 import type { UpdateUserData, User } from '@/domain/models/User';
-import { UserService } from '@/domain/services/UserService';
+import type { UserService } from '@/domain/services/UserService';
 import { v4 as uuidv4 } from 'uuid';
 import {
     createUserSchema,
@@ -10,7 +10,7 @@ import {
 } from './schemas/userSchema';
 
 export class UserFacade {
-  constructor(private readonly userService: UserService = new UserService()) {}
+  constructor(private readonly userService: UserService) {}
 
   private mapUpdateInputToDomain(input: UpdateUserInput): UpdateUserData {
     return {

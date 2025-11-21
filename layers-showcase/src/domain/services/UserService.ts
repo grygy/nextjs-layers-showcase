@@ -1,8 +1,8 @@
-import { UserRepository } from '@/db/repositories/UserRepository';
+import type { UserRepository } from '@/db/repositories/UserRepository';
 import type { UpdateUserData, User } from '../models/User';
 
 export class UserService {
-  constructor(private readonly userRepository: UserRepository = new UserRepository()) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async getAllUsers(): Promise<User[]> {
     return await this.userRepository.findAll();

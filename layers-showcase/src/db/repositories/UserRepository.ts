@@ -1,10 +1,10 @@
 import type { UpdateUserData, User } from '@/domain/models/User';
 import { eq } from 'drizzle-orm';
-import { db, type DbClient } from '../client';
+import type { DbClient } from '../client';
 import { users, type DrizzleUser, type DrizzleUserInsert } from '../schema';
 
 export class UserRepository {
-  constructor(private readonly dbClient: DbClient = db) {}
+  constructor(private readonly dbClient: DbClient) {}
 
   private toDomain(drizzleUser: DrizzleUser): User {
     return {
