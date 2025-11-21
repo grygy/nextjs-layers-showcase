@@ -1,9 +1,11 @@
-import { userFacade } from '../facade/userFacade';
+import { getDependencyRegistry } from '../infrastructure';
 
 async function seed() {
   console.log('🌱 Seeding database...\n');
 
   try {
+    const registry = getDependencyRegistry();
+    
     const users = [
       { name: 'Alice Johnson' },
       { name: 'Bob Smith' },
@@ -14,7 +16,7 @@ async function seed() {
 
     console.log('Creating users...');
     for (const userData of users) {
-      const user = await userFacade.createUser(userData);
+      const user = await registry.userFacade.createUser(userData);
       console.log(`✓ Created user: ${user.name} (ID: ${user.id})`);
     }
 

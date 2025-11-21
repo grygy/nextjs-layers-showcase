@@ -1,11 +1,12 @@
 'use server';
 
-import { userFacade } from '@/facade/userFacade';
+import { getDependencyRegistry } from '@/infrastructure';
 import type { UserOutput } from '@/facade/schemas/userSchema';
 
 export async function getAllUsersAction(): Promise<UserOutput[]> {
   try {
-    return await userFacade.getAllUsers();
+    const registry = getDependencyRegistry();
+    return await registry.userFacade.getAllUsers();
   } catch (error) {
     console.error('Error in getAllUsersAction:', error);
     throw new Error('Failed to fetch users');
@@ -14,7 +15,8 @@ export async function getAllUsersAction(): Promise<UserOutput[]> {
 
 export async function getUserByIdAction(id: string): Promise<UserOutput | null> {
   try {
-    return await userFacade.getUserByIdOrNull(id);
+    const registry = getDependencyRegistry();
+    return await registry.userFacade.getUserByIdOrNull(id);
   } catch (error) {
     console.error('Error in getUserByIdAction:', error);
     throw new Error('Failed to fetch user');
@@ -23,7 +25,8 @@ export async function getUserByIdAction(id: string): Promise<UserOutput | null> 
 
 export async function createUserAction(data: unknown): Promise<UserOutput> {
   try {
-    return await userFacade.createUser(data);
+    const registry = getDependencyRegistry();
+    return await registry.userFacade.createUser(data);
   } catch (error) {
     console.error('Error in createUserAction:', error);
     if (error instanceof Error) {
@@ -35,7 +38,8 @@ export async function createUserAction(data: unknown): Promise<UserOutput> {
 
 export async function updateUserAction(id: string, data: unknown): Promise<UserOutput> {
   try {
-    return await userFacade.updateUser(id, data);
+    const registry = getDependencyRegistry();
+    return await registry.userFacade.updateUser(id, data);
   } catch (error) {
     console.error('Error in updateUserAction:', error);
     if (error instanceof Error) {
@@ -47,7 +51,8 @@ export async function updateUserAction(id: string, data: unknown): Promise<UserO
 
 export async function deleteUserAction(id: string): Promise<void> {
   try {
-    await userFacade.deleteUser(id);
+    const registry = getDependencyRegistry();
+    await registry.userFacade.deleteUser(id);
   } catch (error) {
     console.error('Error in deleteUserAction:', error);
     throw new Error('Failed to delete user');

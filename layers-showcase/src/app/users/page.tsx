@@ -1,7 +1,8 @@
-import { userFacade } from '@/facade/userFacade';
+import { getDependencyRegistry } from '@/infrastructure';
 
 export default async function UsersPage() {
-  const users = await userFacade.getAllUsers();
+  const registry = getDependencyRegistry();
+  const users = await registry.userFacade.getAllUsers();
 
   return (
     <div className="p-8">

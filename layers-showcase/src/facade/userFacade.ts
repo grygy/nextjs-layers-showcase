@@ -71,5 +71,3 @@ export class UserFacade {
   }
 }
 
-export const userFacade = new UserFacade();
-
