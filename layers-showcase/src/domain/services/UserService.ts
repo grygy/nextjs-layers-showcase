@@ -1,4 +1,5 @@
 import type { UserRepository } from '@/db/repositories/UserRepository';
+import { UserNotFoundError } from '../errors';
 import type { UpdateUserData, User } from '../models/User';
 
 export class UserService {
@@ -12,7 +13,7 @@ export class UserService {
     const user = await this.userRepository.findById(id);
     
     if (!user) {
-      throw new Error(`User with id ${id} not found`);
+      throw new UserNotFoundError(id);
     }
 
     return user;
@@ -30,7 +31,7 @@ export class UserService {
     const updatedUser = await this.userRepository.update(id, data);
     
     if (!updatedUser) {
-      throw new Error(`User with id ${id} not found`);
+      throw new UserNotFoundError(id);
     }
 
     return updatedUser;
@@ -40,7 +41,7 @@ export class UserService {
     const deleted = await this.userRepository.delete(id);
     
     if (!deleted) {
-      throw new Error(`User with id ${id} not found`);
+      throw new UserNotFoundError(id);
     }
   }
 

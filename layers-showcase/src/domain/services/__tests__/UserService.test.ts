@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { UserService } from '../UserService';
 import { UserRepository } from '@/db/repositories/UserRepository';
 import type { User } from '@/domain/models/User';
+import { UserNotFoundError } from '@/domain/errors';
 
 vi.mock('@/db/repositories/UserRepository');
 
@@ -65,6 +66,7 @@ describe('UserService', () => {
     it('should throw error when user does not exist', async () => {
       mockRepository.findById.mockResolvedValue(null);
 
+      await expect(service.getUserById('non-existent')).rejects.toThrow(UserNotFoundError);
       await expect(service.getUserById('non-existent')).rejects.toThrow(
         'User with id non-existent not found'
       );
@@ -119,6 +121,7 @@ describe('UserService', () => {
     it('should throw error when user does not exist', async () => {
       mockRepository.update.mockResolvedValue(null);
 
+      await expect(service.updateUser('non-existent', { name: 'New Name' })).rejects.toThrow(UserNotFoundError);
       await expect(service.updateUser('non-existent', { name: 'New Name' })).rejects.toThrow(
         'User with id non-existent not found'
       );
@@ -138,6 +141,7 @@ describe('UserService', () => {
     it('should throw error when user does not exist', async () => {
       mockRepository.delete.mockResolvedValue(false);
 
+      await expect(service.deleteUser('non-existent')).rejects.toThrow(UserNotFoundError);
       await expect(service.deleteUser('non-existent')).rejects.toThrow(
         'User with id non-existent not found'
       );

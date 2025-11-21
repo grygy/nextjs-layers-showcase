@@ -2,6 +2,13 @@
 
 import { getDependencyRegistry } from '@/infrastructure';
 import type { UserOutput } from '@/facade/schemas/userSchema';
+import {
+  FetchUsersError,
+  FetchUserError,
+  CreateUserError,
+  UpdateUserError,
+  DeleteUserError,
+} from '../errors';
 
 export async function getAllUsersAction(): Promise<UserOutput[]> {
   try {
@@ -9,7 +16,7 @@ export async function getAllUsersAction(): Promise<UserOutput[]> {
     return await registry.userFacade.getAllUsers();
   } catch (error) {
     console.error('Error in getAllUsersAction:', error);
-    throw new Error('Failed to fetch users');
+    throw new FetchUsersError(error);
   }
 }
 
@@ -19,7 +26,7 @@ export async function getUserByIdAction(id: string): Promise<UserOutput | null> 
     return await registry.userFacade.getUserByIdOrNull(id);
   } catch (error) {
     console.error('Error in getUserByIdAction:', error);
-    throw new Error('Failed to fetch user');
+    throw new FetchUserError(error);
   }
 }
 
@@ -32,7 +39,7 @@ export async function createUserAction(data: unknown): Promise<UserOutput> {
     if (error instanceof Error) {
       throw error;
     }
-    throw new Error('Failed to create user');
+    throw new CreateUserError(error);
   }
 }
 
@@ -45,7 +52,7 @@ export async function updateUserAction(id: string, data: unknown): Promise<UserO
     if (error instanceof Error) {
       throw error;
     }
-    throw new Error('Failed to update user');
+    throw new UpdateUserError(error);
   }
 }
 
@@ -55,7 +62,7 @@ export async function deleteUserAction(id: string): Promise<void> {
     await registry.userFacade.deleteUser(id);
   } catch (error) {
     console.error('Error in deleteUserAction:', error);
-    throw new Error('Failed to delete user');
+    throw new DeleteUserError(error);
   }
 }
 
