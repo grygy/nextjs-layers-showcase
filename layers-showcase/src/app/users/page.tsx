@@ -1,4 +1,4 @@
-import { getDependencyRegistry } from '@/infrastructure';
+import { getDependencyRegistry } from "@/infrastructure/dependencyRegistry";
 
 export default async function UsersPage() {
   const registry = getDependencyRegistry();

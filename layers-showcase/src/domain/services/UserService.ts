@@ -1,6 +1,6 @@
 import type { UserRepository } from '@/db/repositories/UserRepository';
-import { UserNotFoundError } from '../errors';
 import type { UpdateUserData, User } from '../models/User';
+import { UserNotFoundError } from '../errors/DomainError';
 
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}

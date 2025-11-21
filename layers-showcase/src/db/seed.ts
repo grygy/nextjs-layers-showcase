@@ -1,4 +1,4 @@
-import { getDependencyRegistry } from '../infrastructure';
+import { getDependencyRegistry } from '../infrastructure/dependencyRegistry';
 
 async function seed() {
   console.log('🌱 Seeding database...\n');

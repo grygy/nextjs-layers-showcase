@@ -1,14 +1,8 @@
 'use server';
 
-import { getDependencyRegistry } from '@/infrastructure';
+import { getDependencyRegistry } from '@/infrastructure/dependencyRegistry';
 import type { UserOutput } from '@/facade/schemas/userSchema';
-import {
-  FetchUsersError,
-  FetchUserError,
-  CreateUserError,
-  UpdateUserError,
-  DeleteUserError,
-} from '../errors';
+import { FetchUsersError, FetchUserError, CreateUserError, UpdateUserError, DeleteUserError } from '../errors/ActionError';
 
 export async function getAllUsersAction(): Promise<UserOutput[]> {
   try {
