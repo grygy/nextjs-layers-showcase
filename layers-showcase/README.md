@@ -166,12 +166,12 @@ All data flows through explicit mapper functions:
 
 ```typescript
 // Facade → Domain
-private mapCreateInputToDomain(input: CreateUserInput): CreateUserData {
+#mapCreateInputToDomain(input: CreateUserInput): CreateUserData {
   return { name: input.name };
 }
 
 // Domain → Output
-private mapDomainToOutput(user: User): UserOutput {
+#mapDomainToOutput(user: User): UserOutput {
   return { id: user.id, name: user.name };
 }
 ```

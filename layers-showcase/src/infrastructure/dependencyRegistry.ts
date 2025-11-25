@@ -4,10 +4,10 @@ import { UserService } from '@/domain/services/UserService';
 import { UserFacade } from '@/facade/userFacade';
 
 export class DependencyRegistry {
-  public readonly dbClient: DbClient;
-  public readonly userRepository: UserRepository;
-  public readonly userService: UserService;
-  public readonly userFacade: UserFacade;
+  readonly dbClient: DbClient;
+  readonly userRepository: UserRepository;
+  readonly userService: UserService;
+  readonly userFacade: UserFacade;
 
   constructor(dbClient: DbClient = db) {
     this.dbClient = dbClient;

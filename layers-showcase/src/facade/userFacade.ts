@@ -12,13 +12,13 @@ import {
 export class UserFacade {
   constructor(private readonly userService: UserService) {}
 
-  private mapUpdateInputToDomain(input: UpdateUserInput): UpdateUserData {
+  #mapUpdateInputToDomain(input: UpdateUserInput): UpdateUserData {
     return {
       name: input.name,
     };
   }
 
-  private mapDomainToOutput(user: User): UserOutput {
+  #mapDomainToOutput(user: User): UserOutput {
     return {
       id: user.id,
       name: user.name,
@@ -27,19 +27,19 @@ export class UserFacade {
 
   async getAllUsers(): Promise<UserOutput[]> {
     const users = await this.userService.getAllUsers();
-    return users.map((user) => this.mapDomainToOutput(user));
+    return users.map((user) => this.#mapDomainToOutput(user));
   }
 
   async getUserById(id: string): Promise<UserOutput> {
     const validatedInput = userIdSchema.parse({ id });
     const user = await this.userService.getUserById(validatedInput.id);
-    return this.mapDomainToOutput(user);
+    return this.#mapDomainToOutput(user);
   }
 
   async getUserByIdOrNull(id: string): Promise<UserOutput | null> {
     const validatedInput = userIdSchema.parse({ id });
     const user = await this.userService.getUserByIdOrNull(validatedInput.id);
-    return user ? this.mapDomainToOutput(user) : null;
+    return user ? this.#mapDomainToOutput(user) : null;
   }
 
   async createUser(input: unknown): Promise<UserOutput> {
@@ -49,15 +49,15 @@ export class UserFacade {
       name: validatedInput.name,
     };
     const user = await this.userService.createUser(completeUser);
-    return this.mapDomainToOutput(user);
+    return this.#mapDomainToOutput(user);
   }
 
   async updateUser(id: string, input: unknown): Promise<UserOutput> {
     const validatedId = userIdSchema.parse({ id });
     const validatedInput = updateUserSchema.parse(input);
-    const domainData = this.mapUpdateInputToDomain(validatedInput);
+    const domainData = this.#mapUpdateInputToDomain(validatedInput);
     const user = await this.userService.updateUser(validatedId.id, domainData);
-    return this.mapDomainToOutput(user);
+    return this.#mapDomainToOutput(user);
   }
 
   async deleteUser(id: string): Promise<void> {

@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { UserService } from '../UserService';
 import { UserRepository } from '@/db/repositories/UserRepository';
 import type { User } from '@/domain/models/User';
-import { UserNotFoundError } from '@/domain/errors';
+import { UserNotFoundError } from '@/domain/errors/DomainError';
 
 vi.mock('@/db/repositories/UserRepository');
 
