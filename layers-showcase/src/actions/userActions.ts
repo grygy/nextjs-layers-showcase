@@ -1,15 +1,14 @@
 'use server';
 
 import type { UserOutput } from '@/facade/schemas/userSchema';
-import { getDependencyRegistry } from '@/infrastructure/dependencyRegistry';
+import { dependencyRegistry } from '@/infrastructure/dependencyRegistry';
 import { busyWait } from '@/utils/busyWait';
 import { refresh } from 'next/cache';
 
 export async function getAllUsersAction(): Promise<[UserOutput[] | null, string | null]> {
   try {
     await busyWait(2000);
-    const registry = getDependencyRegistry();
-    const users = await registry.userFacade.getAllUsers();
+    const users = await dependencyRegistry.userFacade.getAllUsers();
     return [users, null];
   } catch (error) {
     console.error('Error in getAllUsersAction:', error);
@@ -21,8 +20,7 @@ export async function getAllUsersAction(): Promise<[UserOutput[] | null, string 
 export async function getUserByIdAction(id: string): Promise<[UserOutput | null, string | null]> {
   try {
     await busyWait(2000);
-    const registry = getDependencyRegistry();
-    const user = await registry.userFacade.getUserByIdOrNull(id);
+    const user = await dependencyRegistry.userFacade.getUserByIdOrNull(id);
     return [user, null];
   } catch (error) {
     console.error('Error in getUserByIdAction:', error);
@@ -34,8 +32,7 @@ export async function getUserByIdAction(id: string): Promise<[UserOutput | null,
 export async function createUserAction(data: unknown): Promise<[UserOutput | null, string | null]> {
   try {
     await busyWait(2000);
-    const registry = getDependencyRegistry();
-    const user = await registry.userFacade.createUser(data);
+    const user = await dependencyRegistry.userFacade.createUser(data);
     refresh();
     return [user, null];
   } catch (error) {
@@ -48,8 +45,7 @@ export async function createUserAction(data: unknown): Promise<[UserOutput | nul
 export async function updateUserAction(id: string, data: unknown): Promise<[UserOutput | null, string | null]> {
   try {
     await busyWait(2000);
-    const registry = getDependencyRegistry();
-    const user = await registry.userFacade.updateUser(id, data);
+    const user = await dependencyRegistry.userFacade.updateUser(id, data);
     refresh();
     return [user, null];
   } catch (error) {
@@ -62,8 +58,7 @@ export async function updateUserAction(id: string, data: unknown): Promise<[User
 export async function deleteUserAction(id: string): Promise<[boolean, string | null]> {
   try {
     await busyWait(2000);
-    const registry = getDependencyRegistry();
-    await registry.userFacade.deleteUser(id);
+    await dependencyRegistry.userFacade.deleteUser(id);
     refresh();
     return [true, null];
   } catch (error) {

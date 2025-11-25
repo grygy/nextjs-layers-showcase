@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { DependencyRegistry, resetDependencyRegistry } from '../dependencyRegistry';
+import { describe, it, expect, beforeEach } from 'vitest';
+import { DependencyRegistry } from '../dependencyRegistry';
 import { createTestDb } from '@/__tests__/testDb';
 import type { DbClient } from '@/db/client';
 
@@ -8,13 +8,8 @@ describe('DependencyRegistry - Integration Tests', () => {
   let testDb: DbClient;
 
   beforeEach(() => {
-    resetDependencyRegistry();
     testDb = createTestDb();
     registry = new DependencyRegistry(testDb);
-  });
-
-  afterEach(() => {
-    resetDependencyRegistry();
   });
 
   describe('Full Stack Integration', () => {

@@ -17,16 +17,5 @@ export class DependencyRegistry {
   }
 }
 
-let dependencyRegistry: DependencyRegistry | null = null;
-
-export function getDependencyRegistry(): DependencyRegistry {
-  if (!dependencyRegistry) {
-    dependencyRegistry = new DependencyRegistry();
-  }
-  return dependencyRegistry;
-}
-
-export function resetDependencyRegistry(): void {
-  dependencyRegistry = null;
-}
+export const dependencyRegistry = new DependencyRegistry();
 

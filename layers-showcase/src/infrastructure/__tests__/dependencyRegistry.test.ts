@@ -1,10 +1,7 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { DependencyRegistry, getDependencyRegistry, resetDependencyRegistry } from '../dependencyRegistry';
+import { describe, it, expect } from 'vitest';
+import { DependencyRegistry, dependencyRegistry } from '../dependencyRegistry';
 
 describe('DependencyRegistry - Unit Tests', () => {
-  beforeEach(() => {
-    resetDependencyRegistry();
-  });
 
   describe('Constructor', () => {
     it('should create a registry with all dependencies', () => {
@@ -32,30 +29,10 @@ describe('DependencyRegistry - Unit Tests', () => {
     });
   });
 
-  describe('Singleton Pattern', () => {
-    it('should return the same instance on multiple calls', () => {
-      const registry1 = getDependencyRegistry();
-      const registry2 = getDependencyRegistry();
-
-      expect(registry1).toBe(registry2);
-    });
-
-    it('should return a new instance after reset', () => {
-      const registry1 = getDependencyRegistry();
-      
-      resetDependencyRegistry();
-      
-      const registry2 = getDependencyRegistry();
-
-      expect(registry1).not.toBe(registry2);
-    });
-
-    it('should create singleton lazily on first call', () => {
-      resetDependencyRegistry();
-
-      const registry = getDependencyRegistry();
-
-      expect(registry).toBeInstanceOf(DependencyRegistry);
+  describe('Module Singleton', () => {
+    it('should export the same instance across imports', () => {
+      expect(dependencyRegistry).toBeInstanceOf(DependencyRegistry);
+      expect(dependencyRegistry).toBe(dependencyRegistry);
     });
   });
 
@@ -81,12 +58,10 @@ describe('DependencyRegistry - Unit Tests', () => {
 
   describe('Type Safety', () => {
     it('should have properly typed properties', () => {
-      const registry = getDependencyRegistry();
-
-      const _db: typeof registry.dbClient = registry.dbClient;
-      const _repo: typeof registry.userRepository = registry.userRepository;
-      const _service: typeof registry.userService = registry.userService;
-      const _facade: typeof registry.userFacade = registry.userFacade;
+      const _db: typeof dependencyRegistry.dbClient = dependencyRegistry.dbClient;
+      const _repo: typeof dependencyRegistry.userRepository = dependencyRegistry.userRepository;
+      const _service: typeof dependencyRegistry.userService = dependencyRegistry.userService;
+      const _facade: typeof dependencyRegistry.userFacade = dependencyRegistry.userFacade;
 
       expect(_db).toBeDefined();
       expect(_repo).toBeDefined();
@@ -97,7 +72,7 @@ describe('DependencyRegistry - Unit Tests', () => {
 
   describe('Immutability', () => {
     it('should expose properties as readonly', () => {
-      const registry = getDependencyRegistry();
+      const registry = dependencyRegistry;
 
       expect(registry.dbClient).toBeDefined();
       expect(registry.userRepository).toBeDefined();
